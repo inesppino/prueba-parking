@@ -69,6 +69,11 @@ class App extends React.Component {
     const street = streetAddress.join('+')+`,+${popNumber}`;
     (window.open(`https://www.google.es/maps/place/${street}+${item[0].address['postal-code']}+Madrid/@${item[0].location.latitude},${item[0].location.longitude}/`, '_blank'));
   }
+
+  toggleHeader(e) {
+    let root = document.documentElement;
+    e.target.getAttribute('id') ? root.style.setProperty('--header-height', '100vh') : root.style.setProperty('--header-height', '10vh');
+  }
   
   render () {
     return (
@@ -77,13 +82,13 @@ class App extends React.Component {
           <nav>
             <ul>
               <li>
-                <Link className='link' to="/weather">Tiempo</Link>
+                <Link onClick={this.toggleHeader} className='link' to="/weather">Tiempo</Link>
               </li>
               <li>
-                <Link className='link' to="/">Home</Link>
+                <Link id='home' onClick={this.toggleHeader} className='link' to="/">Home</Link>
               </li>
               <li>
-                <Link className='link' to="/parking">Parking</Link>
+                <Link onClick={this.toggleHeader} className='link' to="/parking">Parking</Link>
               </li>
             </ul>
           </nav>

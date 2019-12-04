@@ -1,9 +1,13 @@
+:root {
+    --header-height: 100vh;
+}
 header {
-    height: 100vh;
+    height: var( --header-height);
     background-color: aqua;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: height 1s;
 } 
 
 ul {
@@ -26,4 +30,8 @@ ul:hover li:not(:hover){
 
 .link {
     text-decoration: none;
+}
+
+main {
+    height: calc(100vh - var(--header-height));
 }
