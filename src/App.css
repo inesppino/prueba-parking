@@ -1,5 +1,29 @@
-.App {
-margin: 5px;
+header {
+    height: 100vh;
+    background-color: aqua;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} 
+
+ul {
+    display: flex;
+    width: 100vw;
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    justify-content: space-around;
 }
 
+li {
+    padding: 0 1rem;
+    transition: opacity 0.2s;
+}
 
+ul:hover li:not(:hover){
+    opacity: 0.5;
+}
+
+.link {
+    text-decoration: none;
+}

@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import './App.css';
-import ParkingList from './component/ParkingList';
-import Filter from './component/Filter';
 import { fetchParking } from './services/ParkingApi';
 import ParkingContainer from './component/ParkingContainer';
 import WeatherContainer from './component/WeatherContainer';
@@ -75,20 +73,17 @@ class App extends React.Component {
   render () {
     return (
       <div className="App">
-        <header className="App-header">
-          aquí irá el encabezado
-        </header>
         <header>
           <nav>
             <ul>
               <li>
-                <Link to="/">Home</Link>
+                <Link className='link' to="/weather">Tiempo</Link>
               </li>
               <li>
-                <Link to="/weather">Tiempo</Link>
+                <Link className='link' to="/">Home</Link>
               </li>
               <li>
-                <Link to="/parking">Parking</Link>
+                <Link className='link' to="/parking">Parking</Link>
               </li>
             </ul>
           </nav>
@@ -96,9 +91,10 @@ class App extends React.Component {
         <main>
           <Switch>
             <Route exact path="/" />
-            <Route path="/weather" component={WeatherContainer} />
+            <Route path="/weather" render={props => ( 
+              <WeatherContainer match={props.match} handleInput={this.handleInput}/> )}/>
             <Route path="/parking" render={props => (
-              <ParkingContainer filterByPostalCode={this.filterByPostalCode} goToMaps={this.goToMaps} handleInput={this.handleInput}/>)} />
+              <ParkingContainer match={props.match} filterByPostalCode={this.filterByPostalCode} goToMaps={this.goToMaps} handleInput={this.handleInput}/>)} />
           </Switch>
         </main>
           

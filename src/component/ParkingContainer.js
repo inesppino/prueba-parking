@@ -8,7 +8,7 @@ class ParkingContainer extends Component {
         const { handleInput, filterByPostalCode, goToMaps } = this.props;
         return(
             <React.Fragment>
-               <Filter handleInput={handleInput} />
+               <Filter handleInput={handleInput} labelTitle="Filtrar por cercanía" placeholderText="Escriba un código postal"/>
                <ParkingList filterByPostalCode={filterByPostalCode} goToMaps={goToMaps} />
             </React.Fragment>
         )
