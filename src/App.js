@@ -14,10 +14,14 @@ class App extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.filterByPostalCode = this.filterByPostalCode.bind(this);
     this.goToMaps = this.goToMaps.bind(this);
+    this.saveParkingList = this.saveParkingList.bind(this);
+    this.setParkingList = this.setParkingList.bind(this);
   };
 
   componentDidMount() {
-    this.getParking();
+    this.setState({
+      parkingArray : this.setParkingList()
+    });
   }
 
   filterByPostalCode() {
@@ -32,6 +36,10 @@ class App extends React.Component {
     });
   }
 
+  saveParkingList(value) {
+    localStorage.setItem('parking', JSON.stringify(value))
+  }
+
   getParking() {
     fetchParking()
       .then(data => {
@@ -41,8 +49,15 @@ class App extends React.Component {
         this.setState({
           parkingArray: data['@graph']
         })
+        this.saveParkingList(this.state.parkingArray);
       })
   };
+
+  setParkingList() {
+    const parkingList = (localStorage.getItem('parking') !== null) ? JSON.parse(localStorage.getItem('parking')) : this.getParking();
+    console.log(parkingList);
+    return parkingList;
+  }
 
   goToMaps (e) {
     const selectedId = e.currentTarget.getAttribute('id');
