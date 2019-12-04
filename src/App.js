@@ -55,17 +55,18 @@ class App extends React.Component {
 
   setParkingList() {
     const parkingList = (localStorage.getItem('parking') !== null) ? JSON.parse(localStorage.getItem('parking')) : this.getParking();
-    console.log(parkingList);
     return parkingList;
   }
 
   goToMaps (e) {
     const selectedId = e.currentTarget.getAttribute('id');
     const item = this.state.parkingArray.filter(elem => elem.id === selectedId);
-    console.log(item);
-    const googleUrl = `https://www.google.es/maps/place/${item[0].address['postal-code']}+Madrid/@${item[0].location.latitude},${item[0].location.longitude}/`
-    (window.open(googleUrl, '_blank'))
-    
+    const streetAddress = item[0].address['street-address'].split(' ');
+    const popNumber = streetAddress.pop();
+    const street = streetAddress.join('+')+`,+${popNumber}`;
+    const googleUrl = `https://www.google.es/maps/place/${street}+${item[0].address['postal-code']}+Madrid/@${item[0].location.latitude},${item[0].location.longitude}/`
+    console.log(googleUrl);
+    (window.open(googleUrl, '_blank'));
   }
   
   render () {
