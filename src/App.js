@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import ParkingList from './component/ParkingList';
 import { fetchParking } from './services/ParkingApi';
 
 class App extends React.Component {
@@ -58,7 +59,7 @@ class App extends React.Component {
     return parkingList;
   }
 
-  goToMaps (e) {
+  goToMaps(e) {
     const selectedId = e.currentTarget.getAttribute('id');
     const item = this.state.parkingArray.filter(elem => elem.id === selectedId);
     const streetAddress = item[0].address['street-address'].split(' ');
@@ -77,17 +78,7 @@ class App extends React.Component {
         </header>
           <label htmlFor="postalCode">Filtrar por cercanía</label>
           <input type="text" name="postalCode" id="postalCode" placeholder="Filtro por código postal" onKeyUp= {this.handleInput}/>
-        <ol>
-          {this.filterByPostalCode().map((elem, index) => {
-            return (
-              <li key={index}> 
-            <h4 className="paking-title">{elem.title.split('.')[1]}</h4> 
-            <p className="parking-address">{elem.address['street-address']} <span className="parking-postal">{elem.address['postal-code']}</span></p>
-            <button id={elem.id} className="btn-get-there" onClick= {this.goToMaps}>Cómo llegar</button>
-          </li>
-            )
-          })}
-        </ol>
+          <ParkingList filterByPostalCode={this.filterByPostalCode} goToMaps={this.goToMaps}/>
       </div>
     );
   }
