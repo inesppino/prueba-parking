@@ -5,10 +5,10 @@ class Filter extends Component {
     render() {
         const { handleInput, labelTitle, placeholderText } = this.props;
         return(
-            <React.Fragment>
+            <div className="filter-wrapper">
                 <label htmlFor="postalCode">{labelTitle}</label>
                 <input type="text" name="postalCode" id="postalCode" placeholder={placeholderText} onKeyUp= {handleInput}/>
-            </React.Fragment>
+            </div>
         )
     }
 }

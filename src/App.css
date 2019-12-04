@@ -35,3 +35,41 @@ ul:hover li:not(:hover){
 main {
     height: calc(100vh - var(--header-height));
 }
+
+.filter-wrapper {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    padding: 10px;
+}
+
+label {
+    margin-right: 15px;
+    font-size: large;
+}
+
+input {
+    outline: 0;
+    border: 1px solid fade(white, 40%);
+    background-color: fade(white, 20%);
+    width: 250px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    transition-duration: 0.25s;
+    font-weight: 300;
+}
+
+input:hover {
+    background-color: fade(white, 40%);
+}
+
+input:focus {
+    background-color: white;
+    width: 300px;
+    color: #53e3a6;
+}
