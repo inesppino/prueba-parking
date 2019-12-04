@@ -1,7 +1,11 @@
 import React from 'react';
+import { Link, Route, Switch } from 'react-router-dom';
 import './App.css';
 import ParkingList from './component/ParkingList';
+import Filter from './component/Filter';
 import { fetchParking } from './services/ParkingApi';
+import ParkingContainer from './component/ParkingContainer';
+import WeatherContainer from './component/WeatherContainer';
 
 class App extends React.Component {
   constructor(props) {
@@ -65,9 +69,7 @@ class App extends React.Component {
     const streetAddress = item[0].address['street-address'].split(' ');
     const popNumber = streetAddress.pop();
     const street = streetAddress.join('+')+`,+${popNumber}`;
-    const googleUrl = `https://www.google.es/maps/place/${street}+${item[0].address['postal-code']}+Madrid/@${item[0].location.latitude},${item[0].location.longitude}/`
-    console.log(googleUrl);
-    (window.open(googleUrl, '_blank'));
+    (window.open(`https://www.google.es/maps/place/${street}+${item[0].address['postal-code']}+Madrid/@${item[0].location.latitude},${item[0].location.longitude}/`, '_blank'));
   }
   
   render () {
@@ -76,9 +78,30 @@ class App extends React.Component {
         <header className="App-header">
           aquí irá el encabezado
         </header>
-          <label htmlFor="postalCode">Filtrar por cercanía</label>
-          <input type="text" name="postalCode" id="postalCode" placeholder="Filtro por código postal" onKeyUp= {this.handleInput}/>
-          <ParkingList filterByPostalCode={this.filterByPostalCode} goToMaps={this.goToMaps}/>
+        <header>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/weather">Tiempo</Link>
+              </li>
+              <li>
+                <Link to="/parking">Parking</Link>
+              </li>
+            </ul>
+          </nav>
+        </header>
+        <main>
+          <Switch>
+            <Route exact path="/" />
+            <Route path="/weather" component={WeatherContainer} />
+            <Route path="/parking" render={props => (
+              <ParkingContainer filterByPostalCode={this.filterByPostalCode} goToMaps={this.goToMaps} handleInput={this.handleInput}/>)} />
+          </Switch>
+        </main>
+          
       </div>
     );
   }
