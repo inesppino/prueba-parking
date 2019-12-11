@@ -1,9 +1,16 @@
 :root {
     --header-height: 100vh;
 }
+
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
 header {
-    height: var( --header-height);
-    background-color: aqua;
+    height: var(--header-height);
+    background-color: #53e3a6;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,14 +29,17 @@ ul {
 li {
     padding: 0 1rem;
     transition: opacity 0.2s;
-}
-
-ul:hover li:not(:hover){
-    opacity: 0.5;
+    font-size: 2rem;   
 }
 
 .link {
     text-decoration: none;
+    color: black;
+}
+
+ul:hover li:not(:hover){
+    opacity: 0.5;
+    transition: color 0.2s;
 }
 
 main {
@@ -42,6 +52,7 @@ main {
     justify-content: center;
     align-items: baseline;
     padding: 10px;
+    margin: 20px 0px;
 }
 
 label {
@@ -50,16 +61,12 @@ label {
 }
 
 input {
-    outline: 0;
-    border: 1px solid fade(white, 40%);
-    background-color: fade(white, 20%);
     width: 250px;
     border-radius: 3px;
     padding: 10px 15px;
     display: block;
     text-align: center;
     font-size: 18px;
-    color: white;
     transition-duration: 0.25s;
     font-weight: 300;
 }
@@ -71,5 +78,84 @@ input:hover {
 input:focus {
     background-color: white;
     width: 300px;
-    color: #53e3a6;
+    color: black;
+    outline: 1px solid #53e3a6;
+}
+
+.parking-list {
+    display: grid;
+    grid-template-columns: repeat(3, 400px);
+    list-style: none;
+    padding: 0 10px;
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+.parking-item {
+    border: 1px solid #dedede;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.15);
+    background-color: #f8f8f8;
+    padding: 0px;
+    justify-self: stretch;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease 0s;
+}
+
+.parking-item:hover {
+    outline: 3px solid #53e3a6;
+    z-index: 2;
+}
+
+.parking-header span {
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-family: 'Abril Fatface', serif;
+    padding-left: 10px;
+}
+
+.parking-header {
+    display: flex;
+    align-items: baseline;
+    padding: 5px;
+    flex-grow: 1;
+}
+
+.paking-title {
+    background-color: #f8f8f8;
+    display: inline;
+    font-family: 'Abril Fatface', serif;
+    font-size: 1.15rem;
+    margin: 0;
+    margin-left: 5px;
+    font-weight: bold;
+    width: 80%;
+}
+
+.parking-description {
+    border-top: 1px solid #dedede;
+    background-color: white;
+    padding: 10px;
+    font-size: 14px;
+    height: 100px;
+}
+
+.parking-address {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-get-there {
+    background-color: #f8f8f8;
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+    border: 1px solid #e4e3e3;
+    border-radius: 3px;
+    transition: all 0.5s ease 0s;
+}
+.btn-get-there:hover {
+    cursor: pointer;
+    background: #53e3a6;
+    width: 30%;
 }

@@ -25,6 +25,7 @@ class App extends React.Component {
     this.setState({
       parkingArray : this.setParkingList()
     });
+    console.log(this.parkingArray)
   }
 
   filterByPostalCode() {

@@ -7,13 +7,19 @@ class ParkingList extends Component {
             return <p className="no-found"> No existe ningún parking en ese código postal</p>
         } else {
             return(
-                <ol>
+                <ol className="parking-list">
                     {filterByPostalCode().map((elem, index) => {
                     return (
-                    <li key={index}> 
-                        <h4 className="paking-title">{elem.title.split('.')[1]}</h4> 
-                        <p className="parking-address">{elem.address['street-address']} <span className="parking-postal">{elem.address['postal-code']}</span></p>
-                        <button id={elem.id} className="btn-get-there" onClick= {goToMaps}>Cómo llegar</button>
+                    <li className="parking-item" key={index}>
+                        <div className="parking-header">
+                            <span>{index+1} -</span>
+                            <h4 className="paking-title">{elem.title.split('.')[1]}</h4>
+                        </div>
+                        <div className="parking-description">
+                            <p className="parking-address">{elem.address['street-address']} <span className="parking-postal">{elem.address['postal-code']}</span></p>
+                            <button id={elem.id} className="btn-get-there" onClick= {goToMaps}>Cómo llegar</button>
+                        </div>
+                        
                     </li>
                     )
                     })}
