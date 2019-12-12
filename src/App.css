@@ -47,12 +47,13 @@ main {
 }
 
 .filter-wrapper {
-    width: 100vw;
+    width: 100%;
+    box-sizing: border-box;
+    height: 20vh;
     display: flex;
     justify-content: center;
-    align-items: baseline;
-    padding: 10px;
-    margin: 20px 0px;
+    align-items: center;
+    padding: 20px;
 }
 
 label {
@@ -158,4 +159,11 @@ input:focus {
     cursor: pointer;
     background: #53e3a6;
     width: 30%;
+}
+
+.no-found {
+    text-align: center;
+    font-size: 1.5rem;
+    height: 50%;
+    margin-top: 5%;
 }

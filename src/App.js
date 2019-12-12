@@ -19,13 +19,14 @@ class App extends React.Component {
     this.goToMaps = this.goToMaps.bind(this);
     this.saveParkingList = this.saveParkingList.bind(this);
     this.setParkingList = this.setParkingList.bind(this);
+    this.resetFilter = this.resetFilter.bind(this);
+    this.toggleHeader = this.toggleHeader.bind(this);
   };
 
   componentDidMount() {
     this.setState({
       parkingArray : this.setParkingList()
     });
-    console.log(this.parkingArray)
   }
 
   filterByPostalCode() {
@@ -74,7 +75,15 @@ class App extends React.Component {
   toggleHeader(e) {
     let root = document.documentElement;
     e.target.getAttribute('id') ? root.style.setProperty('--header-height', '100vh') : root.style.setProperty('--header-height', '10vh');
+    this.resetFilter();
   }
+  
+  resetFilter(){
+    this.setState({
+      input: ''
+    });
+  }
+
   
   render () {
     return (
