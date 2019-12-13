@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import './App.css';
 import { fetchParking } from './services/ParkingApi';
+import { fetchWeather } from './services/WeatherApi'
 import ParkingContainer from './component/ParkingContainer';
 import WeatherContainer from './component/WeatherContainer';
 
@@ -10,22 +11,29 @@ class App extends React.Component {
     super(props);
     this.state = {
       parkingArray : [],
+      haveParking : false,
       input: '',
+      weatherResults : {},
+      haveWeatherResults: false,
     }
 
     this.getParking = this.getParking.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.filterByPostalCode = this.filterByPostalCode.bind(this);
     this.goToMaps = this.goToMaps.bind(this);
-    this.saveParkingList = this.saveParkingList.bind(this);
+    this.saveApiResults = this.saveApiResults.bind(this);
     this.setParkingList = this.setParkingList.bind(this);
     this.resetFilter = this.resetFilter.bind(this);
     this.toggleHeader = this.toggleHeader.bind(this);
+    this.getWeather = this.getWeather.bind(this);
+    this.setWeather = this.setWeather.bind(this);
   };
 
   componentDidMount() {
     this.setState({
-      parkingArray : this.setParkingList()
+      // parkingArray : this.setParkingList()
+      parkingArray : [],
+      weatherResults : this.setWeather()
     });
   }
 
@@ -41,8 +49,8 @@ class App extends React.Component {
     });
   }
 
-  saveParkingList(value) {
-    localStorage.setItem('parking', JSON.stringify(value))
+  saveApiResults(name,value) {
+    localStorage.setItem(name, JSON.stringify(value))
   }
 
   getParking() {
@@ -54,9 +62,9 @@ class App extends React.Component {
         this.setState({
           parkingArray: data['@graph']
         })
-        this.saveParkingList(this.state.parkingArray);
+        this.saveApiResults('parking', this.state.parkingArray);
       })
-  };
+  }
 
   setParkingList() {
     const parkingList = (localStorage.getItem('parking') !== null) ? JSON.parse(localStorage.getItem('parking')) : this.getParking();
@@ -71,6 +79,12 @@ class App extends React.Component {
     const street = streetAddress.join('+')+`,+${popNumber}`;
     (window.open(`https://www.google.es/maps/place/${street}+${item[0].address['postal-code']}+Madrid/@${item[0].location.latitude},${item[0].location.longitude}/`, '_blank'));
   }
+  
+  resetFilter(){
+    this.setState({
+      input: ''
+    });
+  }
 
   toggleHeader(e) {
     let root = document.documentElement;
@@ -78,10 +92,20 @@ class App extends React.Component {
     this.resetFilter();
   }
   
-  resetFilter(){
-    this.setState({
-      input: ''
-    });
+  getWeather() {
+    fetchWeather()
+      .then(data => {
+        this.setState({
+          weatherResults : data,
+          haveWeatherResults: true,
+        })
+        this.saveApiResults('weather', this.state.weatherResults);
+      })
+  }
+
+  setWeather() {
+    const weather = (localStorage.getItem('weather') !== {}) ? JSON.parse(localStorage.getItem('weather')) : this.getWeather();
+    return weather;
   }
 
   
@@ -107,7 +131,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" />
             <Route path="/weather" render={props => ( 
-              <WeatherContainer match={props.match} handleInput={this.handleInput}/> )}/>
+              <WeatherContainer match={props.match} weatherData={this.state.weatherResults}/> )}/>
             <Route path="/parking" render={props => (
               <ParkingContainer match={props.match} filterByPostalCode={this.filterByPostalCode} goToMaps={this.goToMaps} handleInput={this.handleInput}/>)} />
           </Switch>
