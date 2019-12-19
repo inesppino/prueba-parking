@@ -190,8 +190,48 @@ input:focus {
     color: white;
 }
 
+.active {
+    background: darken(#1ab188, 5%);
+}
+
+.today-weather {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
 .weather {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
+    width: 600px;
+    height: 400px;
+    font-size: 20px;
+    /* transform: translateX(-40px); */
+}
+
+.main-temp {
+    font-size: 3rem;
+    display: flex; 
+    margin: 0;
+    font-weight: 400;  
+}
+
+.ico-temp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.ico-temp img {
+    width: 60px;
+}
+
+.minmax-temp {
+    width: 75%;
+    display: flex;
+    justify-content: space-evenly;
 }

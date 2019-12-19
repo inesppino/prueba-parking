@@ -1,43 +1,57 @@
 import React, { Component } from 'react';
+import TodayWeather from './TodayWeather';
 
 class WeatherContainer extends Component {
     //const { weatherData } = this.props;
     //http://openweathermap.org/img/w/10d.png
 
-    transformToCelsius(temp) {
-      return temp = Math.round(temp - 273.15);
+    constructor(props) {
+        super(props);
+        this.state = {
+          todayWeather: true,
+          weeklyWeather: false
+        }
+        this.handleChangeWeather = this.handleChangeWeather.bind(this);
+        this.getChosenWeather = this.getChosenWeather.bind(this);
+    }
+
+    handleChangeWeather(e){
+        let chosen = e.target.id;
+        if(chosen === 'todayWeather') {
+            this.setState({
+                todayWeather : true,
+                weeklyWeather : false,
+            })
+        } else if (chosen === 'weeklyWeather') {
+            this.setState({
+                todayWeather : false,
+                weeklyWeather : true,
+            })
+        }
+    }
+
+    getChosenWeather() {
+        if(this.state.todayWeather) {
+            return (
+                <TodayWeather />
+            )
+        } else if (this.state.weeklyWeather) {
+            return(
+                <p>Working on it</p>
+            )
+        }
     }
     
     render() {
-        const weatherData = {
-            main: {
-                temp: 284.04,
-                temp_max: 285.37,
-                temp_min: 282.59,
-            },
-            weather : [{
-                main: 'Clouds',
-                description: 'few clouds',
-                icon: '02d'
-            }]
-        }
         return(
             <React.Fragment>
                 <article className="header-weather">
-                    <button style={{marginRight: 10}}>Hoy</button>
+                    <button style={{marginRight: 10}} onClick={this.handleChangeWeather} id="todayWeather">Hoy</button>
                     <span style={{fontSize: 40}}>|</span>
-                    <button tyle={{marginLeft: 10}}>Esta semana</button>
+                    <button style={{marginLeft: 10}} onClick={this.handleChangeWeather} id="weeklyWeather">Esta semana</button>
                </article>
-               <div className="weather">
-                    <span> {this.transformToCelsius(weatherData.main.temp)}</span> 
-                    <img src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`} alt={weatherData.weather[0].main}/>
-                    <span>Max: {this.transformToCelsius(weatherData.main['temp_max'])}
-                    Min: {this.transformToCelsius(weatherData.main['temp_min'])}</span>
-                    <span>descripcion: {weatherData.weather[0].main} {weatherData.weather[0].description}</span>
-               </div>
-
+               {this.getChosenWeather()}
            </React.Fragment>
-
         )
     }
 }
