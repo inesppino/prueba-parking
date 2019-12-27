@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import TodayWeather from './TodayWeather';
+import CardWeather from './CardWeather';
 
 class WeatherContainer extends Component {
-    //const { weatherData } = this.props;
-    //http://openweathermap.org/img/w/10d.png
 
     constructor(props) {
         super(props);
         this.state = {
           todayWeather: true,
-          weeklyWeather: false
+          weeklyWeather: false,
+          selectedButton: false,
         }
         this.handleChangeWeather = this.handleChangeWeather.bind(this);
         this.getChosenWeather = this.getChosenWeather.bind(this);
@@ -17,27 +16,22 @@ class WeatherContainer extends Component {
 
     handleChangeWeather(e){
         let chosen = e.target.id;
-        if(chosen === 'todayWeather') {
-            this.setState({
-                todayWeather : true,
-                weeklyWeather : false,
-            })
-        } else if (chosen === 'weeklyWeather') {
-            this.setState({
-                todayWeather : false,
-                weeklyWeather : true,
-            })
-        }
+        this.setState({
+            todayWeather : chosen === 'todayWeather',
+            weeklyWeather : chosen === 'weeklyWeather'
+        })
     }
 
     getChosenWeather() {
         if(this.state.todayWeather) {
             return (
-                <TodayWeather />
+                <CardWeather weatherData={this.props.weatherDailyData}/>
             )
         } else if (this.state.weeklyWeather) {
+            const { weatherWeeklyData } = this.props;
+            const filteredWeek = weatherWeeklyData.filter( elem => elem['dt_txt'].split(' ')[1] === '12:00:00');
             return(
-                <p>Working on it</p>
+                <CardWeather weatherData={filteredWeek}/>
             )
         }
     }
@@ -46,9 +40,13 @@ class WeatherContainer extends Component {
         return(
             <React.Fragment>
                 <article className="header-weather">
-                    <button style={{marginRight: 10}} onClick={this.handleChangeWeather} id="todayWeather">Hoy</button>
-                    <span style={{fontSize: 40}}>|</span>
-                    <button style={{marginLeft: 10}} onClick={this.handleChangeWeather} id="weeklyWeather">Esta semana</button>
+                    <nav>
+                        <ul>
+                            <li className="selected-li" style={{marginRight: 10}} onClick={this.handleChangeWeather} id="todayWeather">Hoy</li>
+                            <li style={{fontSize: 40}}>|</li>
+                            <li tyle={{marginLeft: 10}} onClick={this.handleChangeWeather} id="weeklyWeather">Esta semana</li>
+                        </ul>
+                    </nav>
                </article>
                {this.getChosenWeather()}
            </React.Fragment>

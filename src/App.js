@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
 import './App.css';
 import { fetchParking } from './services/ParkingApi';
-import { fetchWeather } from './services/WeatherApi'
+import WeatherServices from './services/WeatherApi';
 import ParkingContainer from './component/ParkingContainer';
 import WeatherContainer from './component/WeatherContainer';
 
@@ -13,8 +13,11 @@ class App extends React.Component {
       parkingArray : [],
       haveParking : false,
       input: '',
-      weatherResults : {},
-      haveWeatherResults: false,
+      weatherDailyRestults : [],
+      haveweatherDailyRestults: false,
+      weatherWeeklyResults: [],
+      haveweatherWeeklyRestults: false,
+
     }
 
     this.getParking = this.getParking.bind(this);
@@ -33,7 +36,7 @@ class App extends React.Component {
     this.setState({
       // parkingArray : this.setParkingList()
       parkingArray : [],
-      weatherResults : this.setWeather()
+      weatherResults : this.getWeather()
     });
   }
 
@@ -93,18 +96,25 @@ class App extends React.Component {
   }
   
   getWeather() {
-    fetchWeather()
+    WeatherServices.fetchDailyWeather()
       .then(data => {
         this.setState({
-          weatherResults : data,
-          haveWeatherResults: true,
+          weatherDailyRestults : [data],
+          haveweatherDailyRestults: true,
         })
-        this.saveApiResults('weather', this.state.weatherResults);
+        // this.saveApiResults('weather', this.state.weatherDailyRestults);
+      });
+    WeatherServices.fetchWeeklyWeather()
+    .then(data => {
+      this.setState({
+        weatherWeeklyResults: [...data.list],
+        haveweatherWeeklyRestults: true,
       })
+    })
   }
 
   setWeather() {
-    const weather = (localStorage.getItem('weather') !== {}) ? JSON.parse(localStorage.getItem('weather')) : this.getWeather();
+    const weather = (localStorage.getItem('weather') !== []) ? JSON.parse(localStorage.getItem('weather')) : this.getWeather();
     return weather;
   }
 
@@ -131,7 +141,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" />
             <Route path="/weather" render={props => ( 
-              <WeatherContainer match={props.match} weatherData={this.state.weatherResults}/> )}/>
+              <WeatherContainer match={props.match} weatherDailyData={this.state.weatherDailyRestults} weatherWeeklyData={this.state.weatherWeeklyResults}/> )}/>
             <Route path="/parking" render={props => (
               <ParkingContainer match={props.match} filterByPostalCode={this.filterByPostalCode} goToMaps={this.goToMaps} handleInput={this.handleInput}/>)} />
           </Switch>

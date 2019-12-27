@@ -175,8 +175,13 @@ input:focus {
     padding: 20px;
 }
 
-.header-weather button {
-    cursor:pointer;
+.header-weather ul {
+    justify-content: center;
+    align-items: center;
+}
+
+.header-weather li {
+    cursor: pointer;
     transition:.5s ease;
     padding: 10px;
     font-size: 20px;
@@ -185,13 +190,13 @@ input:focus {
     outline: none;
 }
 
-.header-weather button:hover {
-    background: #1ab188;
+.header-weather li:hover {
+    background-color: #1ab188;
     color: white;
 }
 
-.active {
-    background: darken(#1ab188, 5%);
+.selected-li {
+    background-color: #169170;
 }
 
 .today-weather {
