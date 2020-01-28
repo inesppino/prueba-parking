@@ -30,6 +30,7 @@ class WeatherContainer extends Component {
         } else if (this.state.weeklyWeather) {
             const { weatherWeeklyData } = this.props;
             const filteredWeek = weatherWeeklyData.filter( elem => elem['dt_txt'].split(' ')[1] === '12:00:00');
+            console.log(filteredWeek);
             return(
                 <CardWeather weatherData={filteredWeek}/>
             )
@@ -41,10 +42,10 @@ class WeatherContainer extends Component {
             <React.Fragment>
                 <article className="header-weather">
                     <nav>
-                        <ul>
-                            <li className="selected-li" style={{marginRight: 10}} onClick={this.handleChangeWeather} id="todayWeather">Hoy</li>
-                            <li style={{fontSize: 40}}>|</li>
-                            <li tyle={{marginLeft: 10}} onClick={this.handleChangeWeather} id="weeklyWeather">Esta semana</li>
+                        <ul className="weather-choice">
+                            <li style={{marginRight: 10}} onClick={this.handleChangeWeather} id="todayWeather">Hoy</li>
+                            <span style={{fontSize: 40}}>|</span>
+                            <li style={{marginLeft: 10}} onClick={this.handleChangeWeather} id="weeklyWeather">Esta semana</li>
                         </ul>
                     </nav>
                </article>

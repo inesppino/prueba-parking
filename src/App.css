@@ -17,7 +17,7 @@ header {
     transition: height 1s;
 } 
 
-ul {
+.headear-nav {
     box-sizing: border-box;
     display: flex;
     width: 100vw;
@@ -27,7 +27,7 @@ ul {
     justify-content: space-around;
 }
 
-li {
+.headear-nav-li {
     padding: 0 1rem;
     transition: opacity 0.2s;
     font-size: 2rem;   
@@ -38,7 +38,7 @@ li {
     color: black;
 }
 
-ul:hover li:not(:hover){
+.headear-nav:hover .headear-nav-li:not(:hover){
     opacity: 0.5;
     transition: color 0.2s;
 }
@@ -175,12 +175,18 @@ input:focus {
     padding: 20px;
 }
 
-.header-weather ul {
+.weather-choice {
+    box-sizing: border-box;
+    display: flex;
+    width: 100vw;
+    list-style: none;
+    margin: 0;
+    padding: 10px;
     justify-content: center;
     align-items: center;
 }
 
-.header-weather li {
+.weather-choice li {
     cursor: pointer;
     transition:.5s ease;
     padding: 10px;
@@ -190,7 +196,7 @@ input:focus {
     outline: none;
 }
 
-.header-weather li:hover {
+.weather-choice li:hover {
     background-color: #1ab188;
     color: white;
 }
@@ -199,10 +205,20 @@ input:focus {
     background-color: #169170;
 }
 
+.weather-list {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+
 .today-weather {
     display: flex;
     justify-content: center;
     padding: 20px;
+}
+
+.day-week {
+    margin: 0;
 }
 
 .weather {
@@ -210,7 +226,7 @@ input:focus {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    width: 600px;
+    width: 550px;
     height: 400px;
     font-size: 20px;
     /* transform: translateX(-40px); */

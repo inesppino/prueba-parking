@@ -124,14 +124,14 @@ class App extends React.Component {
       <div className="App">
         <header>
           <nav>
-            <ul>
-              <li>
+            <ul className="headear-nav">
+              <li className="headear-nav-li">
                 <Link onClick={this.toggleHeader} className='link' to="/weather">Tiempo</Link>
               </li>
-              <li>
+              <li className="headear-nav-li">
                 <Link id='home' onClick={this.toggleHeader} className='link' to="/">Home</Link>
               </li>
-              <li>
+              <li className="headear-nav-li">
                 <Link onClick={this.toggleHeader} className='link' to="/parking">Parking</Link>
               </li>
             </ul>
